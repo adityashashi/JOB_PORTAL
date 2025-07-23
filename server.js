@@ -8,7 +8,9 @@ import morgan from 'morgan'
 
 // files imports
 import connectDB from './config/db.js';
-import testRoutes from './routes/testRoutes.js'
+//routes imports
+import testRoutes from './routes/testRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 //config
 dotenv.config();
 //mongodb connection
@@ -22,7 +24,8 @@ app.use(cors());
 app.use(morgan(`dev`));
 
 //routes
-app.use('/api/v1/test',testRoutes)
+app.use('/api/v1/test', testRoutes);
+app.use('/api/v1/auth', authRoutes);
 //port
 const PORT = process.env.PORT || 8080
 //listen
