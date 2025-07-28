@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcryptjs';
 
 //schema
 const userSchema = new mongoose.Schema({
@@ -23,10 +24,16 @@ const userSchema = new mongoose.Schema({
     },
     locations: {
         type: String,
-        default: 'India'
+        default: 'India',
     },
 },
-    { timeStamps: true }
+    { timestamps: true }
 );
+
+//middlewares
+userSchema.pre('save', async function () {
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt);
+})
 
 export default mongoose.model('User', userSchema)
